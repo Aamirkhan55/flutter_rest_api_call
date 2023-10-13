@@ -42,7 +42,22 @@ class BaseClient {
   }
 
 // Put
-  Future<dynamic> put(String api) async {}
+  Future<dynamic> put(String api, dynamic object) async {
+    var url = Uri.parse(baseUrl + api);
+    var payload = json.encode(object);
+    var headers = {
+      'Authorization': 'Bearer sfie328370428387=',
+      'Content-Type': 'application/json',
+      'api_key': 'ief873fj38uf38uf83u839898989',
+    };
+
+    var response = await client.put(url, body: payload, headers: headers);
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      //throw exception and catch it in UI
+    }
+  }
 
 // Delet
   Future<dynamic> delete(String api) async {}

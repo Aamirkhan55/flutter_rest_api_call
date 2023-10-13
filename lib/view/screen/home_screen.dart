@@ -54,7 +54,19 @@ class HomeScreen extends StatelessWidget {
                 operation: 'PUT',
                 operationColor: Colors.orangeAccent,
                 description: 'Edit user',
-                onPressed: () {},
+                onPressed: () async {
+                  var id = 2;
+                  var user = User(
+                    name: 'Afzal Ali',
+                    qualifications: [
+                      Qualification(degree: 'Ph.D', completionData: '01-01-2028'),
+                    ],
+                  );
+
+                  var response = await BaseClient().put('/users/$id', user).catchError((err) {});
+                  if (response == null) return;
+                  debugPrint('successful:');
+                },
               ),
               AppButton(
                 operation: 'DEL',
