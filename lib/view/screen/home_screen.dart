@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rest_api_call/model/user_model.dart';
+import 'package:flutter_rest_api_call/services/base_client_services.dart';
 import 'package:flutter_rest_api_call/view/widgets/app_button.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,19 +20,41 @@ class HomeScreen extends StatelessWidget {
                 operation: 'GET',
                 operationColor: Colors.lightGreen,
                 description: 'Fetch users',
-                onPressed: () {},
+                onPressed: () async {
+                  var response =
+                      await BaseClient().get('/users').catchError((err) {});
+                  if (response == null) return;
+                  debugPrint('successful:');
+
+                  var users = userFromJson(response);
+                  debugPrint('Users count: ${users.length}');
+                },
               ),
               AppButton(
                 operation: 'POST',
                 operationColor: Colors.lightBlue,
                 description: 'Add user',
-                onPressed: () {},
+                onPressed: () async {
+                  var user = User(
+                    name: 'Asif Ali',
+                    qualifications: [
+                      Qualification(
+                          degree: 'Master', completionData: '01-01-2025'),
+                    ],
+                  );
+
+                  var response = await BaseClient()
+                      .post('/users', user)
+                      .catchError((err) {});
+                  if (response == null) return;
+                  debugPrint('successful:');
+                },
               ),
               AppButton(
                 operation: 'PUT',
                 operationColor: Colors.orangeAccent,
                 description: 'Edit user',
-                onPressed: (){},
+                onPressed: () {},
               ),
               AppButton(
                 operation: 'DEL',
