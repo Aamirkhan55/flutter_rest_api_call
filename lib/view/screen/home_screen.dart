@@ -72,7 +72,12 @@ class HomeScreen extends StatelessWidget {
                 operation: 'DEL',
                 operationColor: Colors.red,
                 description: 'Delete user',
-                onPressed: () {},
+               onPressed: () async {
+                  var id = 2;
+                  var response = await BaseClient().delete('/users/$id').catchError((err) {});
+                  if (response == null) return;
+                  debugPrint('successful:');
+                },
               ),
             ],
           ),
